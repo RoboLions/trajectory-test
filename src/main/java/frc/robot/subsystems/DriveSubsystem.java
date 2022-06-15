@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
@@ -51,6 +52,43 @@ public class DriveSubsystem extends SubsystemBase {
     // TODO: I don't think we need this ?
     /*m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
     m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);*/
+
+    leftBackMotor.setSensorPhase(true);
+
+    leftFrontMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
+    rightFrontMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
+    leftBackMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
+    rightBackMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
+
+    leftFrontMotor.configNominalOutputForward(0, 10);
+    leftFrontMotor.configNominalOutputReverse(0, 10);
+    leftFrontMotor.configPeakOutputForward(1, 10);
+    leftFrontMotor.configPeakOutputReverse(-1, 10);
+    leftFrontMotor.configNeutralDeadband(0.001, 10);
+
+    rightFrontMotor.configNominalOutputForward(0, 10);
+    rightFrontMotor.configNominalOutputReverse(0, 10);
+    rightFrontMotor.configPeakOutputForward(1, 10);
+    rightFrontMotor.configPeakOutputReverse(-1, 10);
+    rightFrontMotor.configNeutralDeadband(0.001, 10);
+
+    leftBackMotor.configNominalOutputForward(0, 10);
+    leftBackMotor.configNominalOutputReverse(0, 10);
+    leftBackMotor.configPeakOutputForward(1, 10);
+    leftBackMotor.configPeakOutputReverse(-1, 10);
+    leftBackMotor.configNeutralDeadband(0.001, 10);
+
+    rightBackMotor.configNominalOutputForward(0, 10);
+    rightBackMotor.configNominalOutputReverse(0, 10);
+    rightBackMotor.configPeakOutputForward(1, 10);
+    rightBackMotor.configPeakOutputReverse(-1, 10);
+    rightBackMotor.configNeutralDeadband(0.001, 10);
+
+    // Sets how much error is allowed
+    leftFrontMotor.configAllowableClosedloopError(0, 0, 10);
+    leftBackMotor.configAllowableClosedloopError(0, 0, 10);
+    rightFrontMotor.configAllowableClosedloopError(0, 0, 10);
+    rightBackMotor.configAllowableClosedloopError(0, 0, 10);
 
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(driveIMU.getRotation2d());
