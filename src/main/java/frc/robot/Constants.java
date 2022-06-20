@@ -18,7 +18,7 @@ public final class Constants {
     public static final class DriveConstants {
         
         // https://docs.wpilib.org/en/stable/docs/software/pathplanning/system-identification/identification-routine.html#running-the-identification-routine
-        public static final double kTrackwidthMeters = 0.69; // TODO CHANGE
+        public static final double kTrackwidthMeters = 0.58;
         public static final DifferentialDriveKinematics kDriveKinematics =
             new DifferentialDriveKinematics(kTrackwidthMeters);
     
@@ -28,11 +28,11 @@ public final class Constants {
             // Assumes the encoders are directly mounted on the wheel shafts
             (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
     
-        public static final double ksVolts = 0.22; // TODO CHANGE
-        public static final double kvVoltSecondsPerMeter = 1.98; // TODO CHANGE
-        public static final double kaVoltSecondsSquaredPerMeter = 0.2; // TODO CHANGE
+        public static final double ksVolts = 0.67; 
+        public static final double kvVoltSecondsPerMeter = 2.29; 
+        public static final double kaVoltSecondsSquaredPerMeter = 0.25;
     
-        public static final double kPDriveVel = 8.5; // TODO CHANGE
+        public static final double kPDriveVel = 0.01;//3.00;
 
         private static final double IN_TO_M = .0254;
   
@@ -50,8 +50,8 @@ public final class Constants {
     }
     
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 3; // TODO CHANGE
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1; // TODO CHANGE
+        public static final double kMaxSpeedMetersPerSecond = 0.25;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 0.25;
     
         // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
         // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/trajectories/ramsete.html#constructing-the-ramsete-controller-object 
