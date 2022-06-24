@@ -14,8 +14,11 @@ import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.Constants.DriveConstants;
@@ -41,7 +44,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
   
   // Odometry class for tracking robot pose
-  private final DifferentialDriveOdometry m_odometry;
+  public final DifferentialDriveOdometry m_odometry;
 
   public DriveSubsystem() {
     // We need to invert one side of the drivetrain so that positive voltages
@@ -60,6 +63,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);*/
 
     leftBackMotor.setSensorPhase(true);
+    leftFrontMotor.setSensorPhase(true);
 
     leftFrontMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
     rightFrontMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
@@ -105,7 +109,17 @@ public class DriveSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     // Update the odometry in the periodic block
     m_odometry.update(
-      driveIMU.getRotation2d(), leftDistanceTravelledInMeters(), rightDistanceTravelledInMeters());
+      driveIMU.getRotation2d(), Math.abs(leftDistanceTravelledInMeters()), Math.abs(rightDistanceTravelledInMeters()));
+
+      System.out.println("Heading: " + driveIMU.getRotation2d());
+      
+      /*var translation = m_odometry.getPoseMeters().getTranslation();
+      SmartDashboard.putNumber("X Value: ", translation.getX());
+      SmartDashboard.putNumber("Y Value: ", translation.getY());
+      SmartDashboard.putNumber("Left Distance Meters", leftDistanceTravelledInMeters());
+      SmartDashboard.putNumber("Right Distance Meters", rightDistanceTravelledInMeters());
+      System.out.println("Heading: " + driveIMU.getRotation2d());*/
+      //m_yEntry.setNumber(translation.getY());
   }
 
   // Controls the left and right sides of the drive directly with voltages

@@ -24,15 +24,15 @@ public final class Constants {
     
         public static final int kEncoderCPR = 2048;
         public static final double kWheelDiameterMeters = 0.1524;
-        public static final double kEncoderDistancePerPulse =
+        /*public static final double kEncoderDistancePerPulse =
             // Assumes the encoders are directly mounted on the wheel shafts
-            (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
+            (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;*/
     
         public static final double ksVolts = 0.67; 
         public static final double kvVoltSecondsPerMeter = 2.29; 
         public static final double kaVoltSecondsSquaredPerMeter = 0.25;
     
-        public static final double kPDriveVel = 0.01;//3.00;
+        public static final double kPDriveVel = 0.0;//3.00;
 
         private static final double IN_TO_M = .0254;
   
@@ -50,7 +50,7 @@ public final class Constants {
     }
     
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 0.25;
+        public static final double kMaxSpeedMetersPerSecond = 0.5;
         public static final double kMaxAccelerationMetersPerSecondSquared = 0.25;
     
         // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
