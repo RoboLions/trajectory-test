@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.CentripetalAccelerationConstraint;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -77,7 +78,8 @@ public class RobotContainer {
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(DriveConstants.kDriveKinematics)
             // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
+            .addConstraint(autoVoltageConstraint)
+            .addConstraint(new CentripetalAccelerationConstraint(AutoConstants.kMaxCentripetalAcceleration));
 
     // An example trajectory to follow.  All units in meters.
     Trajectory exampleTrajectory =
@@ -85,10 +87,10 @@ public class RobotContainer {
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(3, 0)),
+            List.of(new Translation2d(1, 1)),
             //List.of(new Translation2d(0,0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(3, 0, new Rotation2d(0)),
+            new Pose2d(2, 0, new Rotation2d(0)),
             // Pass config
             config);
 
@@ -102,6 +104,7 @@ public class RobotContainer {
         exampleTrajectory,
         driveSubsystem::getPose,
         m_disabledRamsete, // Pass in disabledRamsete here
+        //m_enabledRamsete,
         new SimpleMotorFeedforward(DriveConstants.ksVolts, DriveConstants.kvVoltSecondsPerMeter, DriveConstants.kaVoltSecondsSquaredPerMeter),
         DriveConstants.kDriveKinematics,
         driveSubsystem::getWheelSpeeds,

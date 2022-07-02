@@ -64,13 +64,13 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
-    SmartDashboard.putNumber("IMU Yaw", driveSubsystem.getHeading());
+    //SmartDashboard.putNumber("IMU Yaw", driveSubsystem.getHeading());
 
     //System.out.println("IMU Yaw: " + driveSubsystem.getHeading());
 
     /*var translation = driveSubsystem.m_odometry.getPoseMeters().getTranslation();
-    System.out.println("x value: " + translation.getX());*/
-    //System.out.println("y value: " + translation.getY());
+    System.out.println("x value: " + translation.getX());
+    System.out.println("y value: " + translation.getY());*/
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

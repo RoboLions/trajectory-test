@@ -112,6 +112,7 @@ public class DriveSubsystem extends SubsystemBase {
       driveIMU.getRotation2d(), Math.abs(leftDistanceTravelledInMeters()), Math.abs(rightDistanceTravelledInMeters()));
 
       System.out.println("Heading: " + driveIMU.getRotation2d());
+      //System.out.println("Wheel speed: " + getWheelSpeeds());
       
       /*var translation = m_odometry.getPoseMeters().getTranslation();
       SmartDashboard.putNumber("X Value: ", translation.getX());
@@ -147,8 +148,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Returns the current wheel speeds of the robot.
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(getBackLeftEncoderVelocityMetersPerSecond(), 
-      getBackRightEncoderVelocityMetersPerSecond());
+    return new DifferentialDriveWheelSpeeds(Math.abs(getBackLeftEncoderVelocityMetersPerSecond()), 
+      Math.abs(getBackRightEncoderVelocityMetersPerSecond()));
   }
 
   // Resets the odometry to the specified pose.
