@@ -3,6 +3,8 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 
+import edu.wpi.first.wpilibj.Servo;
+
 public class RobotMap {
 
     public static final int LEFT_BACK_DRIVE_PORT = 1;

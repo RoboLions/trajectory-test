@@ -40,6 +40,9 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  public static PIDController leftController = new PIDController(0, 0, 0);
+  public static PIDController rightController = new PIDController(0, 0, 0);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -87,7 +90,7 @@ public class RobotContainer {
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(1, 1)),
+            List.of(new Translation2d(1, 0.5)),
             //List.of(new Translation2d(0,0)),
             // End 3 meters straight ahead of where we started, facing forward
             new Pose2d(2, 0, new Rotation2d(0)),
@@ -97,8 +100,17 @@ public class RobotContainer {
     RamseteController m_disabledRamsete = new RamseteController();
     m_disabledRamsete.setEnabled(false);
 
-    var leftController = new PIDController(DriveConstants.kPDriveVel, 0, 0);
-    var rightController = new PIDController(DriveConstants.kPDriveVel, 0, 0);
+    if (Math.abs(leftController.getSetpoint())-Math.abs(driveSubsystem.getWheelSpeeds().leftMetersPerSecond) < 0.25) {
+        leftController = new PIDController(DriveConstants.kPDriveVel, 0, 0);
+    } else {
+        leftController = new PIDController(0, 0, 0);
+    }
+
+    if (Math.abs(rightController.getSetpoint())-Math.abs(driveSubsystem.getWheelSpeeds().rightMetersPerSecond) < 0.25) {
+        rightController = new PIDController(DriveConstants.kPDriveVel, 0, 0);
+    } else {
+        rightController = new PIDController(0, 0, 0);
+    }
     
     RamseteCommand ramseteCommand = new RamseteCommand(
         exampleTrajectory,
@@ -124,6 +136,17 @@ public class RobotContainer {
         },
         driveSubsystem
     );
+
+    /*RamseteCommand ramseteCommand = new RamseteCommand(
+        exampleTrajectory, 
+        driveSubsystem::getPose,
+        m_disabledRamsete, 
+        DriveConstants.kDriveKinematics,
+        (leftVolts, rightVolts) -> {
+            driveSubsystem.tankDriveVolts(leftVolts, rightVolts);
+        },
+        driveSubsystem
+    );*/
 
     /*
     RamseteCommand ramseteCommand =
