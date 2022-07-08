@@ -111,7 +111,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_odometry.update(
       driveIMU.getRotation2d(), Math.abs(leftDistanceTravelledInMeters()), Math.abs(rightDistanceTravelledInMeters()));
 
-      System.out.println("Heading: " + driveIMU.getRotation2d());
+      //System.out.println("Heading: " + driveIMU.getRotation2d());
       //System.out.println("Wheel speed: " + getWheelSpeeds());
       
       /*var translation = m_odometry.getPoseMeters().getTranslation();

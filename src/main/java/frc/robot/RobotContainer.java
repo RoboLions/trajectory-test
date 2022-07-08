@@ -40,8 +40,8 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  public static PIDController leftController = new PIDController(0, 0, 0);
-  public static PIDController rightController = new PIDController(0, 0, 0);
+  public static PIDController leftController;
+  public static PIDController rightController;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -93,14 +93,21 @@ public class RobotContainer {
             List.of(new Translation2d(1, 0.5)),
             //List.of(new Translation2d(0,0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(2, 0, new Rotation2d(0)),
+            new Pose2d(2, 0.75, new Rotation2d(0)),
             // Pass config
             config);
 
     RamseteController m_disabledRamsete = new RamseteController();
     m_disabledRamsete.setEnabled(false);
 
-    if (Math.abs(leftController.getSetpoint())-Math.abs(driveSubsystem.getWheelSpeeds().leftMetersPerSecond) < 0.25) {
+    /*leftController = new PIDController(0, 0, 0);
+    rightController = new PIDController(0, 0, 0);*/
+
+    // p = 7, period oscillation = .227 seconds
+    leftController = new PIDController(DriveConstants.kPDriveVel, DriveConstants.kIDriveVel, DriveConstants.kDDriveVel);
+    rightController = new PIDController(DriveConstants.kPDriveVel, DriveConstants.kIDriveVel, DriveConstants.kDDriveVel);
+
+    /*if (Math.abs(leftController.getSetpoint())-Math.abs(driveSubsystem.getWheelSpeeds().leftMetersPerSecond) < 0.25) {
         leftController = new PIDController(DriveConstants.kPDriveVel, 0, 0);
     } else {
         leftController = new PIDController(0, 0, 0);
@@ -110,21 +117,24 @@ public class RobotContainer {
         rightController = new PIDController(DriveConstants.kPDriveVel, 0, 0);
     } else {
         rightController = new PIDController(0, 0, 0);
-    }
+    }*/
     
     RamseteCommand ramseteCommand = new RamseteCommand(
-        exampleTrajectory,
-        driveSubsystem::getPose,
+        exampleTrajectory, // the trajectory points we put in
+        driveSubsystem::getPose, // get position of bot from drive subsystem
         m_disabledRamsete, // Pass in disabledRamsete here
         //m_enabledRamsete,
         new SimpleMotorFeedforward(DriveConstants.ksVolts, DriveConstants.kvVoltSecondsPerMeter, DriveConstants.kaVoltSecondsSquaredPerMeter),
         DriveConstants.kDriveKinematics,
         driveSubsystem::getWheelSpeeds,
-        leftController,
-        rightController,
+        leftController, // left speed PID
+        rightController, // right speed PID
         // RamseteCommand passes volts to the callback
         (leftVolts, rightVolts) -> {
             driveSubsystem.tankDriveVolts(leftVolts, rightVolts);
+
+            System.out.println("left/right speed, " + leftController.getSetpoint() + ", " + driveSubsystem.getWheelSpeeds().leftMetersPerSecond + 
+            ", "+ rightController.getSetpoint() + ", " + driveSubsystem.getWheelSpeeds().rightMetersPerSecond);
 
             SmartDashboard.putNumber("Real left wheel speed", driveSubsystem.getWheelSpeeds().leftMetersPerSecond);
             SmartDashboard.putNumber("Setpoint left wheel speed", leftController.getSetpoint());
