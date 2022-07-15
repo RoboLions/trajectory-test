@@ -30,11 +30,15 @@ public final class Constants {
     
         public static final double ksVolts = 0.67; //.67 //.8
         public static final double kvVoltSecondsPerMeter = 2.6; //2.29 // 3
-        public static final double kaVoltSecondsSquaredPerMeter = 0.25; //dial in
+        public static final double kaVoltSecondsSquaredPerMeter = 0.25;//0.25; //dial in
     
-        public static final double kPDriveVel = 8*0.45;//3.00;
-        public static final double kIDriveVel = 0.227/1.2;//3.00; try increase
-        public static final double kDDriveVel = 0.0;//3.00;
+        public static final double kLeftPDriveVel = 8*0.45;//3.00;
+        public static final double kLeftIDriveVel = (0.227/1.2)*1.5;//3.00; try increase
+        public static final double kLeftDDriveVel = 0.0;//3.00;
+
+        public static final double kRightPDriveVel = 8*0.45;//3.00;
+        public static final double kRightIDriveVel = (0.227/1.2)*1.5;//3.00; try increase
+        public static final double kRightDDriveVel = 0.0;//3.00;
 
         private static final double IN_TO_M = .0254;
   
@@ -52,9 +56,9 @@ public final class Constants {
     }
     
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 0.3; //1.25
-        public static final double kMaxAccelerationMetersPerSecondSquared = 0.3;//1.25;
-        public static final double kMaxCentripetalAcceleration = 0.25; //1
+        public static final double kMaxSpeedMetersPerSecond = 1.25; //1.25
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.25;//1.25;
+        public static final double kMaxCentripetalAcceleration = 0.8; //1
     
         // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
         // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/trajectories/ramsete.html#constructing-the-ramsete-controller-object 

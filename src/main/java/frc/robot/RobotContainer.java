@@ -93,7 +93,7 @@ public class RobotContainer {
             List.of(new Translation2d(1, 0.5)),
             //List.of(new Translation2d(0,0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(2, 0.75, new Rotation2d(0)),
+            new Pose2d(2, 0, new Rotation2d(0)),
             // Pass config
             config);
 
@@ -104,8 +104,8 @@ public class RobotContainer {
     rightController = new PIDController(0, 0, 0);*/
 
     // p = 7, period oscillation = .227 seconds
-    leftController = new PIDController(DriveConstants.kPDriveVel, DriveConstants.kIDriveVel, DriveConstants.kDDriveVel);
-    rightController = new PIDController(DriveConstants.kPDriveVel, DriveConstants.kIDriveVel, DriveConstants.kDDriveVel);
+    leftController = new PIDController(DriveConstants.kLeftPDriveVel, DriveConstants.kLeftIDriveVel, DriveConstants.kLeftDDriveVel);
+    rightController = new PIDController(DriveConstants.kRightPDriveVel, DriveConstants.kRightIDriveVel, DriveConstants.kRightDDriveVel);
 
     /*if (Math.abs(leftController.getSetpoint())-Math.abs(driveSubsystem.getWheelSpeeds().leftMetersPerSecond) < 0.25) {
         leftController = new PIDController(DriveConstants.kPDriveVel, 0, 0);
